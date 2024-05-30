@@ -16,10 +16,12 @@
    - Create a .env file in the server directory and add necessary environment variables.
    - Example:
      ```makefile
-   ## server-env
-   PORT = 8000
-   DB_URI = your-mongo-URI 
-   JWT_SECRETE = your-jwt-secrete-key
+
+     ## server-env
+    PORT = 8000
+    DB_URI = <mongo-URI> 
+    JWT_SECRETE = <jwt-secrete-key>
+    
 
   1. Start the development server:
      ```bash
