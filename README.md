@@ -5,23 +5,21 @@
    git clone https://github.com/amarnath-dev/project-management-app.git
 2. Navigate to the project directory:
     ```bash
-   navigate to the project directory
+   cd project-management-app
 3. Install dependencies for both frontend and backend:
     ```bash
     cd frontend
     npm install
-    cd ..
     cd server
     npm install
 4. Set up environment variables:
    - Create a .env file in the server directory and add necessary environment variables.
    - Example:
      ```makefile
-
-     ## server-env
-    PORT = 8000
-    DB_URI = <mongo-URI> 
-    JWT_SECRETE = <jwt-secrete-key>
+   ## server-env
+   PORT = 8000
+   DB_URI = your-mongo-URI 
+   JWT_SECRETE = your-jwt-secrete-key
 
   1. Start the development server:
      ```bash
