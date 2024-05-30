@@ -7,9 +7,9 @@ const router = express.Router();
 router.post("/signup", postSignup);
 router.post("/signin", postSignin);
 router.get("/projects", getProjects);
-router.post("/project/new", isLoggedIn, postProject);
-router.get("/project/:id", isLoggedIn, getProject);
-router.patch("/project/update/:id", isLoggedIn, updateProject);
-router.post("/project/delete/:id", isLoggedIn, deleteProject);
+router.post("/projects/new", isLoggedIn, postProject);
+router.get("/projects/:id", isLoggedIn, getProject);
+router.patch("/projects/update/:id", isLoggedIn, updateProject);
+router.delete("/projects/delete/:id", isLoggedIn, deleteProject);
 
 module.exports = router;

@@ -31,9 +31,39 @@ export const getProjects = async () => {
     }
 }
 
-export const createProject = async () => {
+export const createProject = async (details) => {
     try {
-        const res = await API.post("/projects/new", { withCredentials: true });
+        const res = await API.post("/projects/new", details, { withCredentials: true });
+        return res.data;
+    } catch (error) {
+        console.log(error.response.data)
+        return error.response.data;
+    }
+}
+
+export const getProject = async (id) => {
+    try {
+        const res = await API.get(`/projects/${id}`, { withCredentials: true });
+        return res.data;
+    } catch (error) {
+        console.log(error.response.data)
+        return error.response.data;
+    }
+}
+
+export const editProject = async (id, project) => {
+    try {
+        const res = await API.patch(`/projects/update/${id}`, project, { withCredentials: true });
+        return res.data;
+    } catch (error) {
+        console.log(error.response.data)
+        return error.response.data;
+    }
+}
+
+export const deleteProject = async (id) => {
+    try {
+        const res = await API.delete(`/projects/delete/${id}`, { withCredentials: true });
         return res.data;
     } catch (error) {
         console.log(error.response.data)

@@ -10,7 +10,7 @@ const Signin = React.lazy(() => import("../src/pages/Signin"));
 function App() {
   return (
     <>
-      <React.Suspense fallback="Loading...">
+      <React.Suspense>
         <Router>
           <Routes>
             <Route path='/signup' element={<Signup />} />

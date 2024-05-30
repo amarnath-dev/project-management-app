@@ -3,9 +3,8 @@ const User = require("../models/userModel");
 
 const isLoggedIn = async (req, res, next) => {
     try {
-        console.log("->", req.headers)
+        console.log("Cookies", req.body);
         const token = req.headers.authorization || req.headers.Authorization;
-        console.log("hello", token);
         if (token) {
             const decode = jwt.verify(token, process.env.JWT_SECRETE);
             const user = await User.findById(decode?.id);

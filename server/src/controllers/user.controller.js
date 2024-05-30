@@ -156,6 +156,7 @@ const updateProject = async (req, res) => {
     try {
         const id = req.params.id;
         const { name, description, role } = req.body;
+        console.log("sdfsdf", req.body)
         if (!name || !description || !role) {
             res.status(400).json({ success: false, message: "Missing Details" });
         }
