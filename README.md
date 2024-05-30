@@ -13,9 +13,8 @@
     cd server
     npm install
 4. Set up environment variables:
-   - Create a .env file in the server directory and add necessary environment variables.
-   - Example:
-      ```bash
+   - Create a .env file in the server directory and add necessary env variables.
+   ```bash
     PORT = your-port 
     DB_URI = your-db-urI
     JWT_SECRETE = your-jwt-secrete
