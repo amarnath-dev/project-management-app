@@ -15,7 +15,7 @@
 4. Set up environment variables:
    - Create a .env file in the server directory and add necessary env variables.
    ```bash
-    PORT = your-port 
+    PORT = your-port-value 
     DB_URI = your-db-urI
     JWT_SECRETE = your-jwt-secrete
 
