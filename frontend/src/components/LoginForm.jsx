@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export const LoginForm = ({ type }) => {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ export const LoginForm = ({ type }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (type === "signin") {
       const res = await signin(form);
       if (res?.status === false) {
@@ -44,10 +44,17 @@ export const LoginForm = ({ type }) => {
     }
   };
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      return navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <>
       <ToastContainer />
-      <div className="container d-flex vh-100">
+      <div className="container d-flex vh-100 bg-secondary">
         <div className="row justify-content-center align-self-center w-100">
           <div className="col-md-6 col-lg-5">
             <div className="card bg-light">
@@ -66,7 +73,7 @@ export const LoginForm = ({ type }) => {
                       className="form-control"
                       id="eamil"
                       name="email"
-                      value={form.email}
+                      value={form?.email}
                       required
                       onChange={handleChange}
                     />
@@ -80,7 +87,7 @@ export const LoginForm = ({ type }) => {
                       className="form-control"
                       id="password"
                       name="password"
-                      value={form.password}
+                      value={form?.password}
                       required
                       onChange={handleChange}
                     />
