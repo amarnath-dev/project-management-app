@@ -9,19 +9,17 @@ const Signin = React.lazy(() => import("../src/pages/Signin"));
 
 function App() {
   return (
-    <>
-      <React.Suspense>
-        <Router>
-          <Routes>
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/signin' element={<Signin />} />
-            <Route path='/' element={<Home />} />
-            <Route path='/project' element={<Project />} />
-            <Route path='/new' element={<Form />} />
-          </Routes>
-        </Router>
-      </React.Suspense>
-    </>
+    <React.Suspense>
+      <Router>
+        <Routes>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/signin' element={<Signin />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/project' element={<Project />} />
+          <Route path='/new' element={<Form />} />
+        </Routes>
+      </Router>
+    </React.Suspense>
   );
 }
 

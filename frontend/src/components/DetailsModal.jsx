@@ -40,37 +40,35 @@ export const DetailsModal = ({ open, setOpen, id }) => {
   }, [id]);
 
   return (
-    <>
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Project Informations
-            </Typography>
-            <hr />
-            <Typography id="modal-modal-description">
-              <span>
-                Name: <strong>{project?.name}</strong>{" "}
-              </span>
-            </Typography>
-            <div className="mt-2">
-              <span>
-                Description: <strong>{project?.description}</strong>{" "}
-              </span>
-            </div>
-            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-              <span>
-                Role: <strong>{project?.role}</strong>{" "}
-              </span>
-            </Typography>
-          </Box>
-        </Modal>
-      </div>
-    </>
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Project Informations
+          </Typography>
+          <hr />
+          <Typography id="modal-modal-description">
+            <span>
+              Name: <strong>{project?.name}</strong>{" "}
+            </span>
+          </Typography>
+          <div className="mt-2">
+            <span>
+              Description: <strong>{project?.description}</strong>{" "}
+            </span>
+          </div>
+          <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+            <span>
+              Role: <strong>{project?.role}</strong>{" "}
+            </span>
+          </Typography>
+        </Box>
+      </Modal>
+    </div>
   );
 };
