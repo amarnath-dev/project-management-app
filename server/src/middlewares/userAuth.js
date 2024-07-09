@@ -3,8 +3,7 @@ const User = require("../models/userModel");
 
 const isLoggedIn = async (req, res, next) => {
     try {
-        console.log("Cookies", req.body);
-        const token = req.headers.authorization || req.headers.Authorization;
+        const token = req.headers?.authorization || req.headers?.Authorization;
         if (token) {
             const decode = jwt.verify(token, process.env.JWT_SECRETE);
             const user = await User.findById(decode?.id);
@@ -15,7 +14,7 @@ const isLoggedIn = async (req, res, next) => {
             next();
         }
     } catch (error) {
-        return res.status(500).json({ status: false, message: "Internal server error" });
+        res.status(500).json({ status: false, message: "Internal server error" });
     }
 }
 

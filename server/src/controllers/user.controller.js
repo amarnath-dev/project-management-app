@@ -19,15 +19,15 @@ const generateToken = async (email, id) => {
     }
 }
 
-const postSignup = async (req, res) => {
+const postSignup = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            res.status(400).json({ success: false, message: "Missing credentials" });
+            return res.json({ success: false, message: "Missing credentials" });
         }
         const exists = await User.findOne({ email: email });
         if (exists) {
-            res.status(400).json({ status: false, message: "Email Alredy Exists" });
+            return res.json({ status: false, message: "Email Alredy Exists" });
         }
         const newUser = new User({
             email: email,
@@ -36,7 +36,7 @@ const postSignup = async (req, res) => {
         await newUser.save();
         if (newUser) {
             const token = await generateToken(email, newUser?._id);
-            res.status(201).json({
+            return res.status(201).json({
                 success: true, message: "User registration successfull", user: {
                     _id: newUser?._id,
                     email: newUser?.email,
@@ -46,25 +46,25 @@ const postSignup = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: false, message: "Internal server error" });
+        next(error?.message)
     }
 }
 
-const postSignin = async (req, res) => {
+const postSignin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            res.status(400).json({ success: false, message: "Missing credentials" });
+            return res.status(400).json({ success: false, message: "Missing credentials" });
         }
         const user = await User.findOne({ email: email });
         if (!user) {
-            res.status(400).json({ status: false, message: "User not found" });
-            return;
+            return res.status(400).json({ status: false, message: "User not found" });
+
         }
         const match = bcrypt.compare(password, user?.password);
         if (match) {
             const token = await generateToken(user.email, user._id);
-            res.status(200).json({
+            return res.status(200).json({
                 status: true, message: "User login successfull", user: {
                     _id: user._id,
                     email: user.email,
@@ -72,107 +72,104 @@ const postSignin = async (req, res) => {
                 token,
             })
         } else {
-            res.status(400).json({ status: false, message: "Incorrect Password" });
+            return res.status(400).json({ status: false, message: "Incorrect Password" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message);
     }
 }
 
 
-const getProjects = async (req, res) => {
+const getProjects = async (req, res, next) => {
     try {
         const projects = await Project.find();
-        console.log("--->", projects);
-        res.status(200).json({ status: true, message: "Projects fetch successfull", projects })
+        return res.status(200).json({ status: true, message: "Projects fetch successfull", projects })
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message)
     }
 }
 
-const postProject = async (req, res) => {
+const postProject = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { name, description, role } = req.body;
         if (!name || !description || !role) {
-            res.status(400).json({ success: false, message: "Missing Details" });
+            return res.status(400).json({ success: false, message: "Missing Details" });
         }
         const newProject = new Project({
-            name: name,
-            description: description,
-            role: role,
+            name,
+            description,
+            role,
         });
         await newProject.save();
         if (newProject) {
-            res.status(201).json({ status: true, message: "New Project has added" });
+            return res.status(201).json({ status: true, message: "New Project has added" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message)
     }
 }
 
-const deleteProject = async (req, res) => {
+const deleteProject = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.params?.id;
         if (id) {
             const deleteProject = await Project.findByIdAndDelete(id);
             if (deleteProject) {
-                res.status(200).json({ status: true, message: "Project has been deleted" });
+                return res.status(200).json({ status: true, message: "Project has been deleted" });
             } else {
-                res.status(400).json({ status: false, message: "Project not found" });
+                return res.status(400).json({ status: false, message: "Project not found" });
             }
         } else {
-            res.status(400).json({ status: false, message: "Project ID not found" });
+            return res.status(400).json({ status: false, message: "Project ID not found" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message);
     }
 }
 
-const getProject = async (req, res) => {
+const getProject = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.params?.id;
         if (id) {
             const project = await Project.findById(id);
             if (project) {
-                res.status(200).json({ status: true, project });
+                return res.status(200).json({ status: true, project });
             } else {
-                res.status(400).json({ status: false, message: "Project not found" });
+                return res.status(400).json({ status: false, message: "Project not found" });
             }
         } else {
-            res.status(400).json({ status: false, message: "Project ID not found" });
+            return res.status(400).json({ status: false, message: "Project ID not found" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message);
     }
 }
 
-const updateProject = async (req, res) => {
+const updateProject = async (req, res, next) => {
     try {
-        const id = req.params.id;
+        const id = req.params?.id;
         const { name, description, role } = req.body;
-        console.log("sdfsdf", req.body)
         if (!name || !description || !role) {
-            res.status(400).json({ success: false, message: "Missing Details" });
+            return res.status(400).json({ success: false, message: "Missing Details" });
         }
         if (id) {
             const update = await Project.findByIdAndUpdate(id, { name: name, description: description, role: role });
             if (update) {
-                res.status(200).json({ status: true, message: "Project has been updated" });
+                return res.status(200).json({ status: true, message: "Project has been updated" });
             } else {
-                res.status(400).json({ status: false, message: "Project updation failed" });
+                return res.status(400).json({ status: false, message: "Project updation failed" });
             }
         } else {
-            res.status(400).json({ status: false, message: "Project ID not found" });
+            return res.status(400).json({ status: false, message: "Project ID not found" });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ status: "failed", message: "Internal server error" });
+        next(error?.message)
     }
 }
 

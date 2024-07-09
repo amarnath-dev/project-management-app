@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connect = require("../server/src/config/db");
 const userRoute = require("../server/src/routes/userRoutes");
+const handleError = require("../server/src/middlewares/handleError");
 
 const app = express();
 dotenv.config();
@@ -20,6 +21,9 @@ app.use(cookieParser());
 app.use(cors(corsConfig));
 
 app.use("/api", userRoute)
+
+//Error Handle Middleware
+app.use(handleError);
 
 app.listen(process.env.PORT, () => console.log("Server is running on port", process.env.PORT));
 
