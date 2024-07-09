@@ -3,9 +3,9 @@ import { signin, signup } from "../services/user.services";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
 
 export const LoginForm = ({ type }) => {
   const navigate = useNavigate();
@@ -28,17 +28,17 @@ export const LoginForm = ({ type }) => {
     if (type === "signin") {
       const res = await signin(form);
       if (res?.status === false) {
-        toast.error(res.message);
+        toast.error(res?.message);
       } else {
-        Cookies.set("token", res.token);
+        Cookies.set("token", res?.token);
         navigate("/");
       }
     } else if (type === "signup") {
       const res = await signup(form);
       if (res?.status === false) {
-        toast.error(res.message);
+        toast.error(res?.message);
       } else {
-        Cookies.set("token", res.token);
+        Cookies.set("token", res?.token);
         navigate("/");
       }
     }
@@ -54,7 +54,7 @@ export const LoginForm = ({ type }) => {
   return (
     <>
       <ToastContainer />
-      <div className="container d-flex vh-100 bg-secondary">
+      <div className="container d-flex vh-100">
         <div className="row justify-content-center align-self-center w-100">
           <div className="col-md-6 col-lg-5">
             <div className="card bg-light">
@@ -96,17 +96,17 @@ export const LoginForm = ({ type }) => {
                     Submit
                   </button>
                 </form>
-                <div>
+                <div className="d-flex mt-2 flex-column justify-content-center">
                   {type === "signin" ? (
-                    <>
+                    <div>
                       <small>New User ?</small>
                       <Link to={"/signup"}> Signup</Link>
-                    </>
+                    </div>
                   ) : (
-                    <>
+                    <div>
                       <small>Alredy have an account ?</small>
                       <Link to={"/signin"}> Signin</Link>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>

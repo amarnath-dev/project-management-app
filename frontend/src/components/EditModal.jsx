@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 import { getProject, editProject } from "../services/user.services";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 const style = {
   position: "absolute",

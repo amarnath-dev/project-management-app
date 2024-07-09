@@ -56,7 +56,7 @@ export const editProject = async (id, project) => {
         const res = await API.patch(`/projects/update/${id}`, project, { withCredentials: true });
         return res.data;
     } catch (error) {
-        console.log(error.response.data)
+        console.log(error.response.data);
         return error.response.data;
     }
 }
